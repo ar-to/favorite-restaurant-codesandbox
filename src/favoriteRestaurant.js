@@ -1,7 +1,7 @@
 // Write functions here
 function hashRestaurantsCount(data) {
   let restaurantCountHash = {
-    restaurantPlaceholder: 0
+    restaurantPlaceholder: 0,
   };
   for (const [_, restaurants] of Object.entries(data)) {
     restaurants.forEach((restaurant) => {
@@ -11,8 +11,6 @@ function hashRestaurantsCount(data) {
       restaurantCountHash[restaurant] += 1;
     });
   }
-  // return restaurantCountHash
-  // const restaurantCountHash = hashRestaurantsCount(data)
   const hashValues = Object.values(restaurantCountHash);
   const sortedHashValues = [...hashValues].sort();
   const reversedHashValues = sortedHashValues.reverse();
@@ -20,6 +18,23 @@ function hashRestaurantsCount(data) {
   const indexOfLargestValue = hashValues.indexOf(largerstValue);
   const hashKeys = Object.keys(restaurantCountHash);
   const mostOccurring = hashKeys[indexOfLargestValue];
+  // second largest
+  const secondLargestValue = reversedHashValues[1];
+  const secondLargestIndex = hashValues.indexOf(secondLargestValue);
+  let secondMostOccurring = null;
+  let topTwoMostOccurent = null;
+  if (hashKeys[secondLargestIndex] !== undefined) {
+    secondMostOccurring = hashKeys[secondLargestIndex];
+    topTwoMostOccurent = [mostOccurring, secondMostOccurring];
+  }
+  // console.log(">>>", restaurantCountHash);
+  // console.log(">>>", hashValues);
+  // console.log(">>>sortedHashValues", sortedHashValues);
+  console.log(">>>reversedHashValues", reversedHashValues);
+  // console.log(">>>", largerstValue);
+  // console.log(">>>", indexOfLargestValue);
+  // console.log(">>>", hashKeys);
+  // console.log(">>>", mostOccurring);
   return {
     restaurantCountHash,
     hashValues,
@@ -28,46 +43,20 @@ function hashRestaurantsCount(data) {
     largerstValue,
     indexOfLargestValue,
     hashKeys,
-    mostOccurring
+    mostOccurring,
+    secondMostOccurring,
+    topTwoMostOccurent,
   };
 }
 
 export function pickOne(data) {
-  // let mostOccurring = "";
-  // let restaurantCountHash = {
-  //   restaurantPlaceholder: 0
-  // };
-  // for (const [_, restaurants] of Object.entries(data)) {
-  //   restaurants.forEach((restaurant) => {
-  //     if (restaurantCountHash[restaurant] === undefined) {
-  //       restaurantCountHash[restaurant] = 0;
-  //     }
-  //     restaurantCountHash[restaurant] += 1;
-  //   });
-  // }
   const restaurantsAnalytics = hashRestaurantsCount(data);
-  // const hashValues = Object.values(restaurantCountHash);
-  // const sortedHashValues = [...hashValues].sort();
-  // const largerstValue = [...hashValues].sort().reverse()[0];
-  // const indexOfLargestValue = hashValues.indexOf(largerstValue);
-  // const hashKeys = Object.keys(restaurantCountHash);
-  // mostOccurring = hashKeys[indexOfLargestValue];
-  // console.log(">>>", restaurantCountHash);
-  // console.log(">>>", hashValues);
-  // console.log(">>>sortedHashValues", sortedHashValues);
-  // console.log(">>>", largerstValue);
-  // console.log(">>>", indexOfLargestValue);
-  // console.log(">>>", hashKeys);
-  // console.log(">>>", mostOccurring);
   return restaurantsAnalytics.mostOccurring;
 }
 
 export function pickTwo(data) {
-  // reverseValuesList = [...hashValues].sort().reverse()
-  // reverseValuesList.map((value, index) => {
-
-  // })
-  return;
+  const restaurantsAnalytics = hashRestaurantsCount(data);
+  return restaurantsAnalytics.topTwoMostOccurent;
 }
 
 export function weightedPickOne(data) {
